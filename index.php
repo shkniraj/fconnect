@@ -11,12 +11,17 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="jquery-1.11.2.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>
+   
+
+    
+</head>
+<body>
+  <script>
 		// initialize and setup facebook js sdk
 			window.fbAsyncInit = function() {
 		    FB.init({
 		      appId      : '1707162649537669',
-		      cookie     : true,  // enable cookies to allow the server to access 
+		      cookie     : true,  // enable cookies to allow the server to access session.
               xfbml      : true,//Extended facebook markup language ,It is for social plugin provided by facebook.
 		      version    : 'v2.5'
 		    });
@@ -24,16 +29,12 @@
 		    	
 		    	
 		    	if (response.status === 'connected') {
-		    		
+		    	document.getElementById('usernamed').style.visibility = 'visible';	
 		    	document.getElementById('login').style.visibility = 'hidden';
 		    	FB.api('/me?fields=first_name,last_name,name,id,email,birthday,gender,likes,picture.width(200).height(200)', function(response) {
-				alert(response.name);
-				alert(response.birthday);
-				alert(response.email);
-				alert(response.gender);
+				
 				document.getElementById('image').innerHTML = "<img src='" + response.picture.data.url + "'>";
 				document.getElementById('username').innerHTML=response.name;
-				//document.getElementById('bday').innerHTML=response.age_range;
 				document.getElementById('email').innerHTML=response.email;
 				document.getElementById('gender').innerHTML=response.gender;
 			
@@ -41,17 +42,19 @@
 
 			});
 		    	} else if (response.status === 'not_authorized') {
-		    	//	document.getElementById('status').innerHTML = 'We are not logged in.'
+		    	
 		 
 		    		document.getElementById('usernamed').style.visibility = 'hidden';
 					document.getElementById('image').style.visibility = 'hidden';
+					     document.getElementById('login').style.visibility = 'visible';
 		    		
 		    		
 		    	} else {
-		    	//	document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+		    	
 		    	
 		    		document.getElementById('usernamed').style.visibility = 'hidden';
 					document.getElementById('image').style.visibility = 'hidden';
+					 document.getElementById('login').style.visibility = 'visible';
 		    
 		    	}
 		    });
@@ -72,7 +75,7 @@
 		function login() {
 			FB.login(function(response) {
 				if (response.status === 'connected') {
-		    		//document.getElementById('status').innerHTML = 'We are connected.';
+		    		
 		    		document.getElementById('login').style.visibility = 'hidden';
 		    		document.getElementById('usernamed').style.visibility = 'visible';
 				document.getElementById('image').style.visibility = 'visible';
@@ -88,10 +91,11 @@
 			
 			});
 		    	} else if (response.status === 'not_authorized') {
-		    		//document.getElementById('status').innerHTML = 'We are not logged in.';
+		    		
 		    		
 		    		document.getElementById('usernamed').style.visibility = 'hidden';
 					document.getElementById('image').style.visibility = 'hidden';
+					 document.getElementById('login').style.visibility = 'visible';
 	
 		    		
 		    	} else {
@@ -99,6 +103,7 @@
 		    	
 		    		document.getElementById('usernamed').style.visibility = 'hidden';
 					document.getElementById('image').style.visibility = 'hidden';
+					 document.getElementById('login').style.visibility = 'visible';
 		    		
 		    	}
 			}, {scope:  'publish_actions,public_profile,user_birthday'});
@@ -122,11 +127,6 @@ FB.api('/me/feed', 'post', { message: message_str}, function(response) {
 			
 }
 	</script>
-
-    
-</head>
-<body>
-
    
    <div class="container " id="emailwa">
         <div class="row text-center" style="padding-top:30px;">
@@ -177,7 +177,10 @@ FB.api('/me/feed', 'post', { message: message_str}, function(response) {
      
     
        
-   
+   <script>
+    document.getElementById('usernamed').style.visibility = 'hidden';
+        document.getElementById('login').style.visibility = 'hidden';
+    </script>
   
 </body>
 </html>

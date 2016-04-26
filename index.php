@@ -92,8 +92,9 @@
 				document.getElementById('email').innerHTML=response.email;
 			
 				document.getElementById('gender').innerHTML=response.gender;
-				document.getElementById('locatio').innerHTML=response.location.name;
 				document.getElementById('hometow').innerHTML=response.hometown.name;
+				document.getElementById('locatio').innerHTML=response.location.name;
+				
 				
 			
 			});

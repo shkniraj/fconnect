@@ -208,7 +208,7 @@ function shareLink() {
                               			      <div class="col-sm-4">
                               			     <div class="well" style="width:300px;margin-left:5px;"> 
                                   
-                                    <h4>What's New</h4>
+                                    <h4>Upload Photo</h4>
                                      <div class="form-group" style="padding:14px;">
                                       <textarea class="form-control" placeholder="write image link" id="post2" name="pl"></textarea>
                                     </div>
@@ -219,7 +219,7 @@ function shareLink() {
                               		 <div class="col-sm-4">
                               		<div class="well" style="width:300px;margin-left:5px;"> 
                                   
-                                    <h4>What's New</h4>
+                                    <h4>Share Link</h4>
                                      <div class="form-group" style="padding:14px;">
                                       <textarea class="form-control" placeholder="write link" id="post1" name="pl"></textarea>
                                     </div>

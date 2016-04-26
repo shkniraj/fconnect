@@ -3,25 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content="Acees Basic info through facebook-js-sdk" />
+    <meta name="author" content="Niraj Kumar" />
   
-    <title>Facebook Connect</title>
+    <title>Facebook_Connect</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="jquery-1.11.2.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
    
 
-    
-</head>
+ </head>
 <body>
   <script>
+  
+
 		// initialize and setup facebook js sdk
 			window.fbAsyncInit = function() {
 		    FB.init({
 		      appId      : '1707162649537669',
-		      cookie     : true,  // enable cookies to allow the server to access session.
+		    //  cookie     : true,  // enable cookies to allow the server to access session.
               xfbml      : true,//Extended facebook markup language ,It is for social plugin provided by facebook.
 		      version    : 'v2.5'
 		    });
@@ -31,13 +32,14 @@
 		    	if (response.status === 'connected') {
 		    	document.getElementById('usernamed').style.visibility = 'visible';	
 		    	document.getElementById('login').style.visibility = 'hidden';
-		    	FB.api('/me?fields=first_name,last_name,name,id,email,birthday,gender,likes,picture.width(200).height(200)', function(response) {
+		    	FB.api('/me?fields=first_name,last_name,name,id,email,birthday,gender,hometown,location,likes,picture.width(200).height(200)', function(response) {
 				
 				document.getElementById('image').innerHTML = "<img src='" + response.picture.data.url + "'>";
 				document.getElementById('username').innerHTML=response.name;
 				document.getElementById('email').innerHTML=response.email;
 				document.getElementById('gender').innerHTML=response.gender;
-			
+				document.getElementById('hometow').innerHTML=response.hometown.name;
+				document.getElementById('locatio').innerHTML=response.location.name;
 			
 
 			});
@@ -63,6 +65,8 @@
 		
 		
 		};
+		//PART 1
+		
 		(function(d, s, id){
 		    var js, fjs = d.getElementsByTagName(s)[0];
 		    if (d.getElementById(id)) {return;}
@@ -70,6 +74,8 @@
 		    js.src = "//connect.facebook.net/en_US/sdk.js";
 		    fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
+		
+		//PART 1 END
 		
 		// login with facebook with extra permissions
 		function login() {
@@ -80,13 +86,14 @@
 		    		document.getElementById('usernamed').style.visibility = 'visible';
 				document.getElementById('image').style.visibility = 'visible';
 		    		
-		    		FB.api('/me?fields=first_name,last_name,name,id,likes,email,birthday,gender,picture.width(200).height(200)', function(response) {
+		    		FB.api('/me?fields=first_name,last_name,name,id,likes,email,birthday,gender,hometown,location,picture.width(200).height(200)', function(response) {
 				document.getElementById('username').innerHTML=response.name;
 				document.getElementById('image').innerHTML = "<img src='" + response.picture.data.url + "'>";
 				document.getElementById('email').innerHTML=response.email;
-			//	document.getElementById('bday').innerHTML=response.age_range;
+			
 				document.getElementById('gender').innerHTML=response.gender;
-				
+				document.getElementById('locatio').innerHTML=response.location.name;
+				document.getElementById('hometow').innerHTML=response.hometown.name;
 				
 			
 			});
@@ -106,17 +113,19 @@
 					 document.getElementById('login').style.visibility = 'visible';
 		    		
 		    	}
-			}, {scope:  'publish_actions,public_profile,user_birthday'});
+			}, {scope:  'publish_actions,public_profile,email,user_birthday,user_hometown,user_location'});
 		}
 		
-		// getting basic user info
-		function getInfo() {
+		//publish_action 
+	
+		
+		
+		
+		
+	function submit(){
 			
-		}
-		function submit(){
-			
-			var message_str= document.getElementById('post').value;
-FB.api('/me/feed', 'post', { message: message_str}, function(response) {
+			var message= document.getElementById('post').value;
+FB.api('/me/feed', 'post', { message: message}, function(response) {
   if (!response || response.error) {
     alert('Couldnt Publish Data');
     
@@ -126,6 +135,32 @@ FB.api('/me/feed', 'post', { message: message_str}, function(response) {
 });
 			
 }
+
+function shareLink() {
+	var lin= document.getElementById('post1').value;
+			FB.api('/me/feed', 'post', {link: lin}, function(response) {
+				  if (!response || response.error) {
+    alert('Couldnt share link');
+    
+  } else {
+    alert("link successfully shred to your wall");
+  }
+			});
+		}
+		
+		function uploadPhoto() {
+		var uphoto= document.getElementById('post2').value;
+			FB.api('/me/photos', 'post', {url:uphoto}, function(response) {
+				if (!response || response.error) {
+    alert("Couldnt upload photo");
+    
+  } else {
+    alert("photo uploaded successfully");
+  }
+			});
+		}
+
+
 	</script>
    
    <div class="container " id="emailwa">
@@ -151,28 +186,53 @@ FB.api('/me/feed', 'post', { message: message_str}, function(response) {
                   <h3 > <strong id-"genderd"> Gender:</strong><span id="gender"></span> </h3> 
               
                  <h3 >  <strong>  Email: </strong><span id="email"></span></h3>  
-
-              
+				 <h3 style="position:relative;left:290px;width:500px;">  <strong>  HomeTown: </strong><span id="hometow"></span></h3>
+              <h3 style="position:relative;left:290px;width:500px;">  <strong>  Current Location: </strong><span id="locatio"></span></h3>
                 
                    <br />
-				      <div class="well" style="width:500px;margin-left:295px;"> 
+                   <div class="row">
+				    <div class="col-sm-4">
+                              
+                              				      <div class="well" style="width:300px;margin-left:5px;"> 
                                   
                                     <h4>What's New</h4>
                                      <div class="form-group" style="padding:14px;">
-                                      <textarea class="form-control" placeholder="Update your status" id="post"></textarea>
+                                      <textarea class="form-control" placeholder="Update your status" id="post" name="pl"></textarea>
                                     </div>
                                     <button class="btn btn-primary pull-right"  onclick="submit()">Post</button><ul class="list-inline"><li></li></ul>
                                  
+                              </div>
+                              </div>
+                              			     
+                              			      <div class="col-sm-4">
+                              			     <div class="well" style="width:300px;margin-left:5px;"> 
+                                  
+                                    <h4>What's New</h4>
+                                     <div class="form-group" style="padding:14px;">
+                                      <textarea class="form-control" placeholder="write image link" id="post2" name="pl"></textarea>
+                                    </div>
+                                    <button class="btn btn-primary pull-right"  onclick="uploadPhoto()">Post</button><ul class="list-inline"><li></li></ul>
+                                  </div>
+                              </div>
+                              		
+                              		 <div class="col-sm-4">
+                              		<div class="well" style="width:300px;margin-left:5px;"> 
+                                  
+                                    <h4>What's New</h4>
+                                     <div class="form-group" style="padding:14px;">
+                                      <textarea class="form-control" placeholder="write link" id="post1" name="pl"></textarea>
+                                    </div>
+                                    <button class="btn btn-primary pull-right"  onclick="shareLink()">Post</button><ul class="list-inline"><li></li></ul>
+                                 </div>
+                              </div>
                               </div>
 				   </div>
                
                   <button class="btn btn-primary" id="login" onclick="login()" style="position:relative;bottom:400px;left:500px;">Login With Facebook </button>
       
                     
-	
-	
-	
-               
+
+	  
            </div>
      
     
